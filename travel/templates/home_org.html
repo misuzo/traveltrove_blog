@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Log out</button>
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}">Log in</a>
+    {% endif %}
+    <p>This is the main page of TravelTrove.</p>
+{% endblock %}
