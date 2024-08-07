@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Create a new Post</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ post_form.as_p }}
+
+    {{ photo_formset.management_form }}
+    {% for form in photo_formset %}
+      {{ form.as_p }}
+    {% endfor %}
+
+    <button type="submit">Save Post</button>
+  </form>
+
+{% endblock %}

@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
+<br/>
 <div class="container">
     <h2>{{ profile.user.username }}'s profile</h2>
     <p><strong>First name:</strong> {{ profile.user.first_name }}</p>
     <p><strong>Bio:</strong> {{ profile.bio }}</p>
     <p><strong>Country:</strong> {{ profile.country }}</p>
 </div>
+
+<!-- Centered Button -->
+<div class="d-flex align-items-center justify-content-center mt-4">
+    <a href="{% url 'update_profile' %}" class="btn btn-primary py-md-3 px-md-5">Update Profile</a>
+</div>
+
 {% endblock %}

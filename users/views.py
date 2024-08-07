@@ -1,8 +1,11 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordChangeView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from users.forms import SignUpForm, LogInForm, UpdateProfileForm, UpdateUserForm
 from users.models import Profile
 
@@ -35,7 +38,7 @@ def signup(request):
 @login_required
 def profile_view(request):
     profile = get_object_or_404(Profile, user=request.user)
-    return render(request, 'profile.html', {'profile': profile})
+    return render(request, 'registration/profile.html', {'profile': profile})
 
 
 @login_required
@@ -75,3 +78,9 @@ class CustomLogInView(LoginView):
         # else browser session will be as long as the session cookie time "SESSION_COOKIE_AGE" defined in settings.py
         return super(CustomLogInView, self).form_valid(form)
 
+
+class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
+    template_name = 'registration/change_password.html'
+    success_message = 'Successfully Changed Your Password'
+    success_url = reverse_lazy('home')
+    login_url = 'login'
