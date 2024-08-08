@@ -1,18 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<br/>
-<h1 class="container">My Posts</h1>
+<div class="container mt-4">
+    <h1 class="mb-4">My Posts</h1>
 
-{% if posts %}
-    <div class="container">
+    {% if posts %}
         <div class="row">
             {% for post in posts %}
                 <div class="col-md-4 mb-4">
                     <div class="card">
                         <div class="card-body">
+                            <!-- Tytuł posta -->
                             <h5 class="card-title">{{ post.title }}</h5>
+
+                            <!-- Wyświetlanie daty tworzenia -->
+                            <p class="card-text text-muted">{{ post.created_at|date:"F j, Y" }}</p>
+
+                            <!-- Skrócona treść posta -->
                             <p class="card-text">{{ post.content|slice:":100" }}...</p>
+
+                            <!-- Linki do akcji -->
                             <a href="{% url 'post-details' post.pk %}" class="btn btn-primary">Read More</a>
                             <a href="{% url 'update_post' post.pk %}" class="btn btn-warning">Edit</a>
                             {% if user.is_authenticated and post.author == user %}
@@ -23,14 +30,11 @@
                 </div>
             {% endfor %}
         </div>
-    </div>
-{% else %}
-<div class="container mt-5">
-    <div class="col-12">
-        <p>Sorry!</p>
-        <p>You have not added any post yet.</p>
-    </div>
-<div/>
-{% endif %}
-
+    {% else %}
+        <div class="col-12">
+            <p>Sorry!</p>
+            <p>You have not added any post yet.</p>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}

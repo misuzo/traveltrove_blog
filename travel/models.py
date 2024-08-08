@@ -16,7 +16,7 @@ class Category(models.Model):
     cat_name = models.CharField(max_length=30, choices=CATEGORY_CHOICES, unique=True)
 
     def __str__(self):
-        return self.cat_name
+        return self.get_cat_name_display()
 
 
 class Post(models.Model):
@@ -27,7 +27,7 @@ class Post(models.Model):
     country = models.CharField(max_length=60)
     content = models.TextField(max_length=5000)
     created_at = models.DateTimeField(auto_now_add=True)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+    category = models.ManyToManyField(Category, blank=True)
 
     def __str__(self):
         return self.title

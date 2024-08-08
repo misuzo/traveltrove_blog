@@ -1,11 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>Update Profile</h2>
+<div class="container mt-5">
+    <h2 class="mb-4">Update Profile</h2>
+
+    <!-- Profile Update Form -->
     <form method="post">
         {% csrf_token %}
-        {{ user_form.as_p }}
-        {{ profile_form.as_p }}
-        <button type="submit" class="btn btn-primary">Update</button>
+
+        <!-- User Form -->
+        <div class="form-group">
+            {{ user_form.as_p }}
+        </div>
+
+        <!-- Profile Form -->
+        <div class="form-group">
+            {{ profile_form.as_p }}
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
+        </div>
     </form>
+</div>
 {% endblock %}

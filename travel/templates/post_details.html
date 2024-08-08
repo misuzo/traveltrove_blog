@@ -1,27 +1,50 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{ post.title }}</h1>
-<p>{{ post.category.get_cat_name_display }}</p>
-<p>{{ post.city }} - {{ post.country }}</p>
-<p>{{ post.content }}</p>
+<div class="container mt-4">
+    <div class="row">
+        <!-- Kolumna dla pojedynczego postu -->
+        <div class="col-md-8 offset-md-2">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <!-- Tytuł posta -->
+                    <h1 class="card-title">{{ post.title }}</h1>
 
-<h2>Photos:</h2>
-{% for photo in post.post_photos.all %}
-    <div>
-        <img src="{{ photo.photo_path.url }}" alt="{{ photo.description }}">
-        <p>{{ photo.description }}</p>
+                    <!-- Wyświetlanie autora -->
+                    <p><strong>Author:</strong> {{ post.author }}</p>
+
+                    <!-- Wyświetlanie kategorii -->
+                    <p><strong>Category:</strong> {{ post.category.all|join:", " }}</p> <!-- Jeśli post może mieć wiele kategorii -->
+
+                    <!-- Wyświetlanie lokalizacji -->
+                    <p><strong>Location:</strong> {{ post.city }} - {{ post.country }}</p>
+
+                    <!-- Wyświetlanie treści posta -->
+                    <p>{{ post.content }}</p>
+
+                    {% for photo in post.post_photos.all %}
+                        <div class="mb-3">
+                            <img src="{{ photo.photo_path.url }}" alt="{{ photo.description }}" class="img-fluid mb-2">
+                            <p>{{ photo.description }}</p>
+                        </div>
+                    {% empty %}
+                        <p>No photos available.</p>
+                    {% endfor %}
+
+                    <!-- Wyświetlanie czasu stworzenia -->
+                    <p><strong>Created at:</strong> {{ post.created_at|date:"F j, Y, g:i a" }}</p>
+
+                    <div class="mt-4">
+                        <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
+
+                        {% if user.is_authenticated and post.author == user %}
+                            <a href="{% url 'update_post' post.id %}" class="btn btn-warning">Edit Post</a>
+                            <a href="{% url 'confirm-delete' pk=post.pk %}" class="btn btn-danger">Delete Post</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-{% empty %}
-    <p>No photos available.</p>
-{% endfor %}
-
-<div class="mt-4">
-    <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
-
-    {% if user.is_authenticated and post.author == user %}
-        <a href="{% url 'confirm-delete' pk=object.pk %}" class="btn btn-danger">Delete Post</a>
-        <a href="{% url 'update_post' post.id %}" class="btn btn-warning">Edit Post</a>
 </div>
-{% endif %}
 {% endblock %}

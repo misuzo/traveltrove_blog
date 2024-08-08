@@ -38,8 +38,13 @@ class PostDetailView(DetailView):
 
 
 def posts_by_category(request, cat_name):
-    category = get_object_or_404(Category, cat_name=cat_name)
-    posts = Post.objects.filter(category=category).order_by('-created_at')
+
+    if cat_name == 'no-category':
+        category = None
+        posts = Post.objects.filter(category__isnull=True).order_by('-created_at')
+    else:
+        category = get_object_or_404(Category, cat_name=cat_name)
+        posts = Post.objects.filter(category=category).order_by('-created_at')
     request.session['previous_url'] = request.get_full_path()
 
     context = {
@@ -72,6 +77,7 @@ def add_post(request):
             new_post = post_form.save(commit=False)
             new_post.author = request.user
             new_post.save()
+            post_form.save_m2m()
 
             for form in photo_formset.cleaned_data:
 
@@ -115,6 +121,7 @@ def update_post(request, pk):
             updated_post = post_form.save(commit=False)
             updated_post.author = request.user
             updated_post.save()
+            post_form.save_m2m()
 
             for form in photo_formset:
                 if form.cleaned_data and not form.cleaned_data.get('DELETE', False):
@@ -180,6 +187,6 @@ def my_posts(request):
     request.session['previous_url'] = request.get_full_path()
 
     context = {
-        'posts': Post.objects.all()
+        'posts': posts
     }
     return render(request, 'my_posts.html', context=context)
