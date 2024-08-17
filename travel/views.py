@@ -1,7 +1,4 @@
-from django.conf import settings
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail
 from django.forms import modelformset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
@@ -14,6 +11,11 @@ from travel.forms import PostForm, PhotoForm
 class HomeView(ListView):
     model = Post
     template_name = 'index.html'
+    context_object_name = 'posts'
+    ordering = ['-created_at']
+
+    def get_queryset(self):
+        return Post.objects.all().order_by('-created_at')[:3]
 
 
 def about_view(request):

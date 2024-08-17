@@ -28,11 +28,6 @@
             <div class="col-lg-8">
                 <div class="contact-form bg-white" style="padding: 30px;">
                     <div id="success"></div>
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
-                        {% endfor %}
-                    {% endif %}
                     <form method="post" novalidate="novalidate">
                         {% csrf_token %}
                         <div class="form-row">

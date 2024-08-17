@@ -3,6 +3,12 @@
 {% block content %}
 <br/>
 <div class="container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
     <h2>{{ profile.user.username }}'s profile</h2>
     <p><strong>First name:</strong> {{ profile.user.first_name }}</p>
     <p><strong>Bio:</strong> {{ profile.bio }}</p>

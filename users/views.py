@@ -3,7 +3,7 @@ from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from users.forms import SignUpForm, LogInForm, UpdateProfileForm, UpdateUserForm
@@ -51,7 +51,7 @@ def update_profile(request):
             user_form.save()
             profile_form.save()
             messages.success(request, 'Your profile is updated successfully.')
-            return redirect(to='home')
+            return redirect(to='profile')
         else:
             messages.error(request, 'Please correct the error/s.')
 
