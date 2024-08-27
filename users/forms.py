@@ -2,6 +2,7 @@ import django.forms as f
 from users.models import Profile
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django_countries.fields import CountryField
 
 import users
 
@@ -23,12 +24,7 @@ class SignUpForm(UserCreationForm):
                                  'class': 'form-control'
                                  }))
 
-    country = f.CharField(
-        max_length=60,
-        required=False,
-        widget=f.TextInput(attrs={'placeholder': 'Where are you from?',
-                                  'class': 'form-control'
-                                  }))
+    country = CountryField().formfield()
 
     password1 = f.CharField(
         label='Password',
@@ -97,12 +93,6 @@ class UpdateProfileForm(f.ModelForm):
                                  'class': 'form-control'
                                  }))
 
-    country = f.CharField(
-        max_length=60,
-        required=False,
-        widget=f.TextInput(attrs={'placeholder': 'Where are you from?',
-                                  'class': 'form-control'
-                                  }))
 
     class Meta:
         model = Profile

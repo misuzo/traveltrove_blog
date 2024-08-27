@@ -45,8 +45,9 @@ def posts_by_category(request, cat_name):
         category = None
         posts = Post.objects.filter(category__isnull=True).order_by('-created_at')
     else:
-        category = get_object_or_404(Category, cat_name=cat_name)
+        category = get_object_or_404(Category, cat_name__iexact=cat_name)
         posts = Post.objects.filter(category=category).order_by('-created_at')
+
     request.session['previous_url'] = request.get_full_path()
 
     context = {
