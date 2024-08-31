@@ -10,8 +10,20 @@
     {% endif %}
 
     <h2>{{ profile.user.username }}'s profile</h2>
+
+    <p><strong>Your avatar:</strong>
+    <div class="form-group">
+        <p>Current Avatar:</p>
+        <img src="{{ request.user.profile.avatar.url }}"
+             class="img-thumbnail rounded-circle"
+             style="width: 150px; height: 150px; object-fit: cover;"
+             onerror="this.onerror=null; this.src='{% static 'images/default.jpg' %}'"/>
+    </div>
+
     <p><strong>First name:</strong> {{ profile.user.first_name }}</p>
+
     <p><strong>Bio:</strong> {{ profile.bio }}</p>
+
     <p><strong>Country:</strong> {{ profile.country }}</p>
 </div>
 

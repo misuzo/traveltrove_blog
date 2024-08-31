@@ -1,12 +1,21 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 <div class="container mt-5">
     <h2 class="mb-4">Update Profile</h2>
 
     <!-- Profile Update Form -->
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
+
+        <!-- Display Avatar -->
+        <div class="form-group">
+            <p>Current Avatar:</p>
+            <img src="{{ request.user.profile.avatar.url }}"
+                 class="img-thumbnail rounded-circle"
+                 style="width: 150px; height: 150px; object-fit: cover;"
+                 onerror="this.onerror=null; this.src='{% static 'images/default.jpg' %}'"/>
+        </div>
 
         <!-- User Form -->
         <div class="form-group">

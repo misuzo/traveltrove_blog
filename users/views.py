@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LoginView, PasswordChangeView
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
@@ -45,7 +45,7 @@ def profile_view(request):
 def update_profile(request):
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=request.user)
-        profile_form = UpdateProfileForm(request.POST, instance=request.user.profile)
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
 
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
@@ -84,3 +84,4 @@ class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChange
     success_message = 'Successfully Changed Your Password'
     success_url = reverse_lazy('home')
     login_url = 'login'
+

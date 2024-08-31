@@ -14,13 +14,23 @@ class SignUpForm(UserCreationForm):
         min_length=5,
         required=True,
         widget=f.TextInput(attrs={'title': 'Required. 5-25 characters. Letters, digits and @/./+/-/_ only.',
+                                  'placeholder': 'Choose your username',
                            'class': 'form-control'
+                                  }))
+
+    email = f.CharField(
+        required=True,
+        widget=f.TextInput(attrs={'placeholder': 'Your e-mail'
+                                  }))
+
+    first_name = f.CharField(
+        widget=f.TextInput(attrs={'placeholder': 'What\'s your name?'
                                   }))
 
     bio = f.CharField(
         max_length=200,
         required=False,
-        widget=f.Textarea(attrs={'placeholder': 'Tell us something about yourself.',
+        widget=f.Textarea(attrs={'placeholder': 'Tell us something about yourself',
                                  'class': 'form-control'
                                  }))
 
@@ -42,9 +52,11 @@ class SignUpForm(UserCreationForm):
                                       'id': 'password'
                                       }))
 
+    avatar = f.ImageField(widget=f.FileInput)
+
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'bio', 'country', 'password1', 'password2']
+        fields = ['username', 'email', 'first_name', 'bio', 'country', 'password1', 'password2', 'avatar']
 
 
 class LogInForm(AuthenticationForm):
@@ -81,10 +93,12 @@ class UpdateUserForm(f.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username']
+        fields = ['username', 'email']
 
 
 class UpdateProfileForm(f.ModelForm):
+
+    avatar = f.ImageField(widget=f.FileInput)
 
     bio = f.CharField(
         max_length=200,
@@ -96,4 +110,4 @@ class UpdateProfileForm(f.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ['bio', 'country']
+        fields = ['avatar', 'bio', 'country']

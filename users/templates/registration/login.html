@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block content %}
 <div class="container mt-5">
     <h2>Login</h2>
@@ -14,6 +13,8 @@
         </div>
         <br>
         <button type="submit" class="btn btn-primary">Log in</button>
+        <a href="{% url 'password-reset' %}" class="btn btn-link">Forgot your password?</a>
     </form>
+
 </div>
 {% endblock %}
