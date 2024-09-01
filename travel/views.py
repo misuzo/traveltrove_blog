@@ -4,7 +4,6 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, DetailView
-
 from config import settings
 from travel.models import Post, Photo, Category
 from travel.forms import PostForm, PhotoForm, ContactForm

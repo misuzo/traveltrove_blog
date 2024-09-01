@@ -8,9 +8,6 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from users.forms import SignUpForm, LogInForm, UpdateProfileForm, UpdateUserForm
 from users.models import Profile
-from django.core.mail import send_mail
-from django.conf import settings
-
 
 def signup(request):
     if request.method == 'POST':
