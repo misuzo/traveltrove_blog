@@ -4,8 +4,11 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, DetailView
+
+from config import settings
 from travel.models import Post, Photo, Category
-from travel.forms import PostForm, PhotoForm
+from travel.forms import PostForm, PhotoForm, ContactForm
+from django.core.mail import send_mail
 
 
 class HomeView(ListView):
@@ -58,8 +61,38 @@ def posts_by_category(request, cat_name):
     return render(request, 'categories.html', context=context)
 
 
+# def contact(request):
+#     return render(request, 'contact.html')
+#
 def contact(request):
-    return render(request, 'contact.html')
+
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+
+        if form.is_valid():
+            name = request.POST['name']
+            email = request.POST['email']
+            subject = request.POST['subject']
+            message = request.POST['message']
+
+            send_mail(
+                f'From {name}, Subject: {subject}',
+                f'Message: {message}.',
+                email,
+                [settings.ADMIN_EMAIL], # Go to settings.py and change ADMIN_EMAIL = 'YOUR EMAIL'
+                fail_silently=False,
+            )
+
+            return redirect('success')
+
+    else:
+        form = ContactForm()
+
+    return render(request, 'contact.html', {'form': form})
+
+
+def success(request):
+    return render(request, 'success.html')
 
 
 @login_required

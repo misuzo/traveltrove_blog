@@ -12,5 +12,6 @@ urlpatterns = [
     path('post/<int:pk>/confirm-delete/', views.confirm_delete, name='confirm-delete'),
     path('posts/my-posts/', views.my_posts, name='my-posts'),
     path('post/category/<str:cat_name>/', views.posts_by_category, name='post-category'),
-    path('contact/', views.contact, name='contact')
+    path('contact/', views.contact, name='contact'),
+    path('success/', views.success, name='success'),
 ]

@@ -1,5 +1,7 @@
 import django.forms as f
 from travel.models import Post, Photo, Category
+from django.core.validators import EmailValidator
+
 
 
 class PhotoForm(f.ModelForm):
@@ -27,6 +29,11 @@ class PostForm(f.ModelForm):
 
 
 
+class ContactForm(f.Form):
+    name = f.CharField(required=True)
+    email = f.EmailField(required=True, validators=[EmailValidator()])
+    subject = f.CharField(required=True, max_length=80)
+    message = f.CharField(widget=f.Textarea)
 
 
 

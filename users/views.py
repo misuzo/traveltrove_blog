@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView
+from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
@@ -8,6 +8,8 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from users.forms import SignUpForm, LogInForm, UpdateProfileForm, UpdateUserForm
 from users.models import Profile
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 def signup(request):
@@ -84,4 +86,6 @@ class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChange
     success_message = 'Successfully Changed Your Password'
     success_url = reverse_lazy('home')
     login_url = 'login'
+
+
 

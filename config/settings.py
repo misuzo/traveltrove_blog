@@ -140,5 +140,6 @@ LOGOUT_REDIRECT_URL = 'home'
 
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
 
+ADMIN_EMAIL = 'YOUR EMAIL'
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = str(BASE_DIR.joinpath('sent_emails'))
